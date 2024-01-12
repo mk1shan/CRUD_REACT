@@ -13,23 +13,26 @@ app.use(
 app.use(express.json());
 
 app.get('/users', (req, res) => {
-    controller.getUsers(users => {
+    controller.getUsers((users) => {
         res.send(users);
     });
 });
 
-app.get('/user', (req, res) => {
-    const id = parseInt(req.query.id);
+app.post('/createuser', (req, res) => {
+    controller.addUser(req.body, (callback) => {
+        res.send(callback);
+    });
+});
 
-    if (isNaN(id)) {
-        return res.status(400).send('Invalid or missing user ID');
-    }
+app.post('/updateuser', (req, res) => {
+    controller.updateUser(req.body, (callback) => {
+        res.send(callback);
+    });
+});
 
-    controller.getUserById(id, user => {
-        if (!user) {
-            return res.status(404).send('User not found');
-        }
-        res.send(user);
+app.post('/deleteuser', (req, res) => {
+    controller.deleteUser(req.body, (callback) => {
+        res.send(callback);
     });
 });
 
