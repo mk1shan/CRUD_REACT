@@ -4,7 +4,7 @@ const cors = require('cors');
 
 const router = require('./router');
 const port = 3001;
-const host = '127.0.0.1';
+const host = 'localhost';
 const mongoose = require('mongoose');
 
 app.use(cors());
