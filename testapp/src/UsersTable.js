@@ -1,8 +1,8 @@
 import React from "react";
 import { Paper, TableBody, Table, TableContainer, TableHead, TableRow, TableCell, Button } from "@mui/material";
 
-const UsersTable = (props) => {
-  const { rows } = props; // Destructure rows from props
+const UsersTable = ({rows,selectedUser}) => {
+
 
   return (
     <TableContainer component={Paper}>
@@ -21,7 +21,7 @@ const UsersTable = (props) => {
                 <TableCell component='th' scope="row">{row.id}</TableCell>
                 <TableCell component='th' scope="row">{row.name}</TableCell>
                 <TableCell>
-                  <Button sx={{ margin: '0px 10px' }} onClick={() => {}}>
+                  <Button sx={{ margin: '0px 10px' }} onClick={() => selectedUser({id:row.id,name:row.name})}>
                     Update
                   </Button>
                   <Button sx={{ margin: '0px 10px' }} onClick={() => {}}>
