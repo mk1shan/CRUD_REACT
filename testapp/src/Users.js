@@ -49,6 +49,7 @@ const Users = () => {
     >
       <UserForm 
       addUser={addUser} />
+      submitted={submitted}
       <UsersTable rows={users} />
     </Box>
   );

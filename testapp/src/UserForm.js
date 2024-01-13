@@ -1,12 +1,17 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Grid, Input, Typography, Button } from "@mui/material";
 import { useState } from 'react';
 
-const UserForm = ({addUser}) => { 
+const UserForm = ({addUser,submitted}) => { 
 
   const [id,setId] = useState(0);
   const [name,setName]=useState('');
-
+useEffect(()=>{
+  if(!submitted){
+    setId(0);
+    setName('');
+  }
+},[submitted]);
   return (
     <Grid
       container
