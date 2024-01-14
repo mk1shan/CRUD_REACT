@@ -107,6 +107,6 @@ const UserForm = ({ addUser, updateUser, submitted, data, isEdit }) => {
       </Grid>
     </Grid>
   );
-}
+        }
 
 export default UserForm;
