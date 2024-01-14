@@ -1,31 +1,36 @@
-import React, { useEffect } from 'react';
-import { Box } from '@mui/material';
+import React, { useEffect, useState } from 'react';
+import { Box, CircularProgress, Typography } from '@mui/material';
 import UserForm from './UserForm';
 import UsersTable from './UsersTable';
 import Axios from 'axios';
-import { useState } from 'react';
 
 const Users = () => {
   const [users, setUsers] = useState([]);
   const [submitted, setSubmitted] = useState(false);
   const [isEdit, setIsEdit] = useState(false);
   const [selectedUser, setSelectedUser] = useState({});
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState(null);
 
   useEffect(() => {
     getUsers();
   }, [submitted]);
 
   const getUsers = () => {
+    setLoading(true);
     Axios.get('http://localhost:3001/api/users')
       .then((response) => {
         setUsers(response.data?.response || []);
         setSubmitted(false);
         setIsEdit(false);
+        setError(null);
       })
       .catch((error) => {
         console.error('Axios Error:', error);
-        setSubmitted(false);
-        setIsEdit(false);
+        setError('Failed to fetch users. Please try again.');
+      })
+      .finally(() => {
+        setLoading(false);
       });
   };
 
@@ -43,6 +48,7 @@ const Users = () => {
       })
       .catch((error) => {
         console.error('Axios Error:', error);
+        setError('Failed to add user. Please try again.');
         setSubmitted(false);
         setIsEdit(false);
       });
@@ -62,13 +68,34 @@ const Users = () => {
       })
       .catch((error) => {
         console.error('Axios Error:', error);
+        setError('Failed to update user. Please try again.');
         setSubmitted(false);
         setIsEdit(false);
       });
   };
 
-  return (
-    <Box
+
+  
+const deleteUser =(data) =>{
+ 
+
+
+  Axios.post('http://localhost:3001/api/deleteuser', data)
+    .then(() => {
+      getUsers(); // Call getUsers after successful update
+    })
+    .catch((error) => {
+      console.error('Axios Error:', error);
+      setError('Failed to update user. Please try again.');
+      setSubmitted(false);
+      setIsEdit(false);
+    });
+}
+
+
+
+ return (
+   <Box
       sx={{
         width: 'calc(100% - 100px)',
         margin: 'auto',
@@ -83,7 +110,9 @@ const Users = () => {
         submitted={submitted}
         data={selectedUser}
       />
-      {submitted && <p>Form Submitted!</p>}
+      {loading && <CircularProgress />}
+      {error && <Typography color="error">{error}</Typography>}
+      {submitted && <Typography>Form Submitted!</Typography>}
       <UsersTable
         rows={users}
         setIsEdit={setIsEdit}
@@ -91,9 +120,10 @@ const Users = () => {
           setSelectedUser(data);
           setIsEdit(true);
         }}
+        deleteUser={data=>window.confirm('Are you sure?') && deleteUser(data)}
       />
     </Box>
   );
-};
+      }
 
 export default Users;

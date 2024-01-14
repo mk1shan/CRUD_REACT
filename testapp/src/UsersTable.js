@@ -1,7 +1,15 @@
+// UsersTable.js
+
 import React from "react";
 import { Paper, TableBody, Table, TableContainer, TableHead, TableRow, TableCell, Button } from "@mui/material";
 
-const UsersTable = ({rows,selectedUser}) => {
+
+const UsersTable = ({ rows, selectedUser,deleteUser }) => {
+
+  const handleUpdate = (row) => {
+    selectedUser({ id: row.id, name: row.name });
+  };
+
 
 
   return (
@@ -24,7 +32,7 @@ const UsersTable = ({rows,selectedUser}) => {
                   <Button sx={{ margin: '0px 10px' }} onClick={() => selectedUser({id:row.id,name:row.name})}>
                     Update
                   </Button>
-                  <Button sx={{ margin: '0px 10px' }} onClick={() => {}}>
+                  <Button sx={{ margin: '0px 10px' }} onClick={() => deleteUser({id:row.id})}>
                     Delete
                   </Button>
                 </TableCell>
