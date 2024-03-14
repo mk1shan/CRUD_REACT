@@ -51,7 +51,7 @@ const UserForm = ({ addUser, updateUser, submitted, data, isEdit }) => {
         <Input
           type="number"
           id='id'
-          name="id"
+          name='id'
           sx={{
             width: '400px'
           }}

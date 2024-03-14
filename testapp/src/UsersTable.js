@@ -16,7 +16,7 @@ const UsersTable = ({ rows, selectedUser,deleteUser }) => {
     <TableContainer component={Paper}>
       <Table>
         <TableHead>
-          <TableRow>
+          <TableRow> 
             <TableCell>ID</TableCell>
             <TableCell>Name</TableCell>
             <TableCell>Actions</TableCell>
